@@ -65,11 +65,22 @@ function test_input($data) {
   <input type="submit" name="submit" value="Submit">  
 </form>
 
+
+
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($nameErr) && empty($nicknameErr)) {
-    echo "<h2>Submission Saved:</h2>";
-    echo "Name: " . htmlspecialchars($name) . "<br>";
-    echo "Nickname: " . htmlspecialchars($nickname) . "<br>";
+// Check if the file exists before reading it
+if (file_exists("formtest.txt")) {
+    $myfile = fopen("formtest.txt", "r") or die("Unable to open file!");
+    // Output all lines until end-of-file
+    while(!feof($myfile)) {
+        $line = fgets($myfile);
+        if (!empty($line)) {
+            echo nl2br($line) . "<br>";
+        }
+    }
+    fclose($myfile);
+} else {
+    echo "No previous submissions found.";
 }
 ?>
 
